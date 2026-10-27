@@ -89,7 +89,7 @@ flowchart TD
 
 ### 完成提示與下一步
 
-百分比表示當前階段的進度。
+可計量階段的百分比表示該階段進度；等待回覆或 App 重啟時顯示動態等待條與 `waiting...`。
 完整更新條件通過後，Tool 顯示一次完成對話框，並在狀態列與共用映像區保留 `[COMPLETE]` 及下一步操作。
 開始其他作業、切換 TAB 或載入檔案後，畫面回到目前操作的條件判定；歷史結果可從 Log 與報告查看。
 斷線後重新執行 `Open + Probe Host` 時，進度條與階段標籤歸零；不沿用上次的 100%。
@@ -377,8 +377,20 @@ Compare Metadata 位於共用映像區，CAN 與 Misc 共用相同檢視方式�
 | CHANGE | 黃色 | 即將更新的版本、build、大小不同；這是資訊差異，不是相容性錯誤 |
 | MISMATCH | 紅色 | 身分、分區、IRQ ABI、介面或其他契約不符；不能更新 |
 
-底部顯示當前階段及該階段的百分比，不把傳輸 100% 當成整次更新完成。
+底部顯示目前階段；傳輸使用已確認區塊的百分比，其他等待階段使用動態進度條。
 CAN 分為 Metadata／START／Transfer／END CRC／Confirm App；Misc 分為 Metadata／BEGIN／Transfer／CRC-readback。
+
+| 畫面階段 | 進度顯示 | 目前正在等待的結果 |
+| --- | --- | --- |
+| Metadata／START／END CRC | `waiting...` 與動態等待條 | 對應命令的確認回覆 |
+| Transfer | 0～100% | 已獲確認的資料區塊；100% 表示資料傳輸完成 |
+| App restart | `waiting...` 與動態等待條 | 依映像大小與 END 耗時安排的無 CAN 查詢重啟時間 |
+| Check APP_READY | `waiting...` 與動態等待條 | App 就緒狀態回覆 |
+| Verify running App | `waiting...` 與動態等待條 | 執行中 App 的身分、版本、build、大小等資料 |
+| 完成結果 | 100% 與完成對話框 | 依[完成條件](#update-confirmation)顯示結果 |
+
+等待動畫表示 Tool 仍在處理該階段，不是 MCU 回報的驗證百分比。
+Cancel 仍可提出取消；失敗或取消會停止等待動畫，保留該次結果。
 FLASH erase 的時間包含在對應區塊／BEGIN 交易中，不以推估值另報成精確硬體擦除時間。
 
 Cancel 與 Close COM 分開。

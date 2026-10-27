@@ -168,6 +168,25 @@ Xmodem Transfer 先以 command0x24 宣告389 useful bytes及 CRC32，再進行12
 最後不足128 bytes以1A padding，完成後回到 framed control，讀取 counters。
 CRC16驗證每個區塊，CRC32驗證 useful bytes；診斷用 RAM sink不啟動 Flash或reset。
 
+<a id="serial-device-diagnostics"></a>
+
+### Device 串列診斷
+
+支援診斷能力的 UART／Xmodem App 或 Transfer，在 Discover、Transfer Test及更新後確認 App時，
+Tool會顯示 `Device UART observations`。這是 Device本次執行的快照，不是每次更新的差值。
+`Bridge UART1 observations` 則來自 bridge；兩者分開記錄，不互相代替。
+
+| 欄位 | 意義與核對方向 |
+| --- | --- |
+| RX errors | Device UART接收硬體錯誤；核對baud、電壓、共地與訊號 |
+| RX drops | Device接收queue已滿而丟棄的新資料；核對主迴圈處理、長時間關閉IRQ與傳送節奏 |
+| TX timeouts | Device本機傳送未在界限內完成；與對端未收到ACK是不同觀察點 |
+| RX peak／pending | 本次執行的queue最高使用量／讀取快照當下的待處理bytes |
+
+未宣告診斷能力時，Tool不送出診斷命令，也不以零值代替未提供的資訊。
+Boot更新與I2C mailbox維持各自能力；不因缺少UART診斷而拒絕更新。
+封包欄位集中於[串列診斷格式](https://released.github.io/slide_boot_loader_for_RL78/serial-device.html#serial-uart-diagnostics)。
+
 ### 判讀、取消與報告
 
 | 訊息／情況 | 核對方向 |

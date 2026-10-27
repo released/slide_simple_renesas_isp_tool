@@ -430,6 +430,14 @@
     "device-firmware-與工程說明": {
       "page": "device-guides.html",
       "anchor": "device-firmware-與工程說明"
+    },
+    "serial-device-diagnostics": {
+      "page": "serial-isp.html",
+      "anchor": "serial-device-diagnostics"
+    },
+    "rh850-can-device": {
+      "page": "index.html",
+      "anchor": "rh850-can-device"
     }
   }
 }

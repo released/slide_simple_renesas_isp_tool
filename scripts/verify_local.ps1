@@ -4,7 +4,7 @@ $projectRoot = Split-Path -Parent $PSScriptRoot
 $webRoot = Split-Path -Parent $projectRoot
 $guideMaps=@{}
 $guideReaderPages=@()
-foreach($folder in @('slide_isp_tool_for_RL78','slide_boot_loader_for_RL78')){
+foreach($folder in @('slide_isp_tool_for_RL78','slide_boot_loader_for_RL78','slide_boot_loader_for_RH850')){
     $map=Get-Content -LiteralPath (Join-Path $webRoot ($folder+'\guide-map.json')) -Raw -Encoding UTF8 | ConvertFrom-Json
     $guideMaps[$folder]=$map
     foreach($page in $map.pages.PSObject.Properties.Name){$guideReaderPages+=($folder+'\'+$page+'.md')}

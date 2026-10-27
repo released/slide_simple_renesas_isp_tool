@@ -33,4 +33,10 @@ Device Boot／App 開發見 [Bootloader 指南](../slide_boot_loader_for_RL78/)�
 <!-- ISP_MODE_NAV_END -->
 
 <!-- RH850_DEVICE_BEGIN -->
+<a id="rh850-can-device"></a>
+
+## RH850 MCU CAN device 工程
+
+RH850 的 CAN／CAN FD、App Metadata／IRQ、串列介面與 Flash 移植集中於獨立 Bootloader 指南。
+[閱讀完整章節](https://released.github.io/slide_boot_loader_for_RH850/#rh850-can-device)
 <!-- RH850_DEVICE_END -->
