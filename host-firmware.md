@@ -1,4 +1,4 @@
-[知識庫首頁](https://released.github.io/) · [RL78 ISP Tool 與 MCU bridge 操作](index.html)
+[知識庫首頁](https://released.github.io/) · [Simple Renesas ISP Tool 與 MCU bridge 操作](index.html)
 
 <a id="article_top"></a>
 
@@ -44,7 +44,7 @@ Host Boot 保持固定UART115200；一般 Host Link 連線速度見 [更新政�
 ### Host App 更新操作圖
 
 以下使用 F24 (MCU CAN host)。Misc 更新的是 PC 所連接 host 自身的 App，固定以 UART115200 操作。
-初裝 Boot MOT、燒錄器 App MOT 與 Misc BIN 的選用，見[下載與操作總覽](https://released.github.io/slide_isp_tool_for_RL78/#downloads)。
+初裝 Boot MOT、燒錄器 App MOT 與 Misc BIN 的選用，見[下載與操作總覽](https://released.github.io/slide_simple_renesas_isp_tool/#downloads)。
 
 #### 1. 載入 Host App BIN
 
@@ -78,7 +78,7 @@ Host Boot 保持固定UART115200；一般 Host Link 連線速度見 [更新政�
 
 `Host App update complete - RUN required` 表示映像寫入、CRC 與 metadata readback 通過，**還沒有啟動 App**。
 下一步是明確執行 RUN，不需再次燒錄。
-此次寫入結果會自動保存為 Firmware update report，可按 `Open Last Report` 查看；[報告操作](https://released.github.io/slide_isp_tool_for_RL78/#update-html-report)說明儲存位置與判讀方式。
+此次寫入結果會自動保存為 Firmware update report，可按 `Open Last Report` 查看；[報告操作](https://released.github.io/slide_simple_renesas_isp_tool/#update-html-report)說明儲存位置與判讀方式。
 
 [![Host App 寫入完成但尚待 RUN](images/tool_operation/tool_Bridge_update5_after_update.jpg)](images/tool_operation/tool_Bridge_update5_after_update.jpg)
 
@@ -218,7 +218,7 @@ Parse API 檢查 null／可用長度並回傳 1 或 0；失敗時不使用 outpu
 
 封裝輸出 `<專案名>_bridge_update.bin` 與 `<專案名>_flash.mot`。
 產表與封裝會核對 App mapping、BR 目的地及 RETI／RETB。
-更新操作集中於 [Misc／UART](https://released.github.io/slide_isp_tool_for_RL78/#host-bridge-firmware)。
+更新操作集中於 [Misc／UART](https://released.github.io/slide_simple_renesas_isp_tool/#host-bridge-firmware)。
 
 #### Smart Configurator
 

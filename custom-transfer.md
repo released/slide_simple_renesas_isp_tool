@@ -1,4 +1,4 @@
-[知識庫首頁](https://released.github.io/) · [RL78 ISP Tool 與 MCU bridge 操作](index.html)
+[知識庫首頁](https://released.github.io/) · [Simple Renesas ISP Tool 與 MCU bridge 操作](index.html)
 
 <a id="article_top"></a>
 
@@ -18,9 +18,9 @@ Custom Transfer 搭配 device 的獨立 Transfer 工程。
 
 | MCU device／模式 | 範例原始碼 | Tool 設定 | 操作與對照 |
 | --- | --- | --- | --- |
-| F13 Classical CAN | [RL78_F13_CAN_Transfer](https://github.com/released/RL78_F13_CAN_Transfer) | Classical CAN／500K | [F13 量測範例](https://released.github.io/slide_isp_tool_for_RL78/#f13-transfer-example) |
-| F24 Classical CAN | [RL78_F24_CAN_Transfer](https://github.com/released/RL78_F24_CAN_Transfer) | Classical CAN／500K | [F24 操作與截圖](https://released.github.io/slide_isp_tool_for_RL78/#f24-custom-transfer-example) |
-| F24 CAN FD | [RL78_F24_CAN_FD_Transfer](https://github.com/released/RL78_F24_CAN_FD_Transfer) | CAN FD／500K／2M、BRS | [CAN FD 操作與中斷接收](https://released.github.io/slide_isp_tool_for_RL78/#can-fd-custom-transfer) |
+| F13 Classical CAN | [RL78_F13_CAN_Transfer](https://github.com/released/RL78_F13_CAN_Transfer) | Classical CAN／500K | [F13 量測範例](https://released.github.io/slide_simple_renesas_isp_tool/#f13-transfer-example) |
+| F24 Classical CAN | [RL78_F24_CAN_Transfer](https://github.com/released/RL78_F24_CAN_Transfer) | Classical CAN／500K | [F24 操作與截圖](https://released.github.io/slide_simple_renesas_isp_tool/#f24-custom-transfer-example) |
+| F24 CAN FD | [RL78_F24_CAN_FD_Transfer](https://github.com/released/RL78_F24_CAN_FD_Transfer) | CAN FD／500K／2M、BRS | [CAN FD 操作與中斷接收](https://released.github.io/slide_simple_renesas_isp_tool/#can-fd-custom-transfer) |
 
 ### Classical CAN 操作
 
@@ -314,7 +314,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\build.ps1
 MTPJ的pre/post hooks引用FD helper；SC重新產生後使用同一入口重新prepare與建置。
 正式產物為 `DefaultBuild/RL78_F24_CAN_FD_Transfer.hex`，供燒錄器安裝，不能載入CAN Upgrade。
 安裝獨立Transfer會取代板端原有程式；燒錄前核對實際MCU、映像與erase範圍。
-CRC／診斷欄位見 [Custom Transfer診斷](https://released.github.io/slide_isp_tool_for_RL78/#transfer-diagnostics)。
+CRC／診斷欄位見 [Custom Transfer診斷](https://released.github.io/slide_simple_renesas_isp_tool/#transfer-diagnostics)。
 一般中斷接收與 Transfer Test 已完成實板驗證；queue 壓力、波形及故障測試另行記錄。
 <!-- FD_TRANSFER_END -->
 

@@ -1,4 +1,4 @@
-[知識庫首頁](https://released.github.io/) · [RL78 ISP Tool 與 MCU bridge 操作](index.html)
+[知識庫首頁](https://released.github.io/) · [Simple Renesas ISP Tool 與 MCU bridge 操作](index.html)
 
 <a id="article_top"></a>
 

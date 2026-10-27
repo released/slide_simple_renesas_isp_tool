@@ -1,4 +1,4 @@
-[知識庫首頁](https://released.github.io/) · [RL78 ISP Tool 與 MCU bridge 操作](index.html)
+[知識庫首頁](https://released.github.io/) · [Simple Renesas ISP Tool 與 MCU bridge 操作](index.html)
 
 <a id="article_top"></a>
 
@@ -123,7 +123,7 @@ App 啟動確認涵蓋必要初始化與映像身分，板上的應用功能仍�
 
 App 的 INFO／ENTER 回覆由該 App 實作。
 若自行開發的 App 未提供更新協定，可使用專案定義的 reset／recovery 方式停留 Boot，再 Discover；Tool 不以未回覆推定裝置已進入 Boot。
-完整操作入口見 [MCU CAN device 更新](https://released.github.io/slide_isp_tool_for_RL78/#mcu-can-device)。
+完整操作入口見 [MCU CAN device 更新](https://released.github.io/slide_simple_renesas_isp_tool/#mcu-can-device)。
 
 <a id="tool-ui-fields"></a>
 
@@ -132,7 +132,7 @@ App 的 INFO／ENTER 回覆由該 App 實作。
 畫面上的資訊分為離線 BIN、目前連線裝置與本次操作設定。
 `LOADED APP BIN | OFFLINE` 與共用映像區大多來自檔案，不代表板上已安裝相同內容。
 `Device LIVE policy` 則來自已探索的裝置；尚未取得的 live 資訊不以 BIN 補入。
-五張資訊卡的位置與來源見 [主畫面](https://released.github.io/slide_isp_tool_for_RL78/#tool-operation)。
+五張資訊卡的位置與來源見 [主畫面](https://released.github.io/slide_simple_renesas_isp_tool/#tool-operation)。
 
 <a id="tool-console-layout"></a>
 
@@ -202,11 +202,11 @@ log_auto_scroll=1
 | 欄位／操作 | 用途 | 正常顯示／選擇 | 未符合時的判讀與處理 |
 | --- | --- | --- | --- |
 | COM／Open + Probe Host | 選擇 PC 到 bridge 的連線，讀取 Host 身分與能力 | `COM6: USB Serial Port (COM6)`；Probe 後 HOST BRIDGE 為 `VERIFIED LINK` | friendly name 不是 MCU 身分；未驗證或逾時時先核對 COM、電源、占用程式與 Host Baud |
-| Host Baud | PC 與 Host Link 的 UART 速度 | `115200`、`460800`、`921600`，依 Host 能力協商 | 不等於 CAN bitrate 或 device 更新 UART；Misc 更新固定 `115200`，詳見 [通訊速度](https://released.github.io/slide_isp_tool_for_RL78/#image-update-policy) |
+| Host Baud | PC 與 Host Link 的 UART 速度 | `115200`、`460800`、`921600`，依 Host 能力協商 | 不等於 CAN bitrate 或 device 更新 UART；Misc 更新固定 `115200`，詳見 [通訊速度](https://released.github.io/slide_simple_renesas_isp_tool/#image-update-policy) |
 | Bridge port | 使用 Host 實際回報的周邊 port | Probe 後選擇列出的 port | `N/A - Probe bridge first` 表示尚未取得能力，不是從 MCU 型號推測 port |
 | CAN Mode／Nominal／Data | 本次 CAN 模式、仲裁段與資料段速度 | `Classical CAN`／`500K`／`N/A` | Classical 的 Data 為 `N/A` 是正常；模式、速度須同時符合 Host、BIN 與 device，改 Tool 不會改 device Boot 的編譯設定 |
 | RX Filter／ID／Mask | Host 接收回覆的篩選條件 | `Metadata/default`，或符合回覆 ID 的自訂 filter | 接收錯 ID 可能造成逾時；自訂 mask 不得為零。這是接收 filter，不會改寫 BIN 裡的 request／response ID |
-| Workflow | 選擇更新或通訊測試 | 更新用 `CAN Upgrade`；通訊驗證用 `Custom Transfer` | Transfer 不使用更新 BIN，也不提供 Boot／App metadata；操作見 [Custom Transfer](https://released.github.io/slide_isp_tool_for_RL78/#custom-transfer) |
+| Workflow | 選擇更新或通訊測試 | 更新用 `CAN Upgrade`；通訊驗證用 `Custom Transfer` | Transfer 不使用更新 BIN，也不提供 Boot／App metadata；操作見 [Custom Transfer](https://released.github.io/slide_simple_renesas_isp_tool/#custom-transfer) |
 | Load Update Image／Update image | 讀入檔案並顯示實際路徑 | CAN 載入 `_update.bin`；Misc 載入 `_bridge_update.bin` | 路徑可用來確認選檔，但檔名不是驗證依據；HEX、MOT、未封裝 BIN 或不同角色的映像不能只改副檔名使用 |
 | App Start Override | CAN 更新起點的額外一致性檢查 | `Auto` 使用 BIN metadata 的起點 | 手動值須與 BIN 起點一致；不會搬移映像、重建向量或改寫 metadata。Misc 不開放此欄位 |
 
@@ -308,7 +308,7 @@ CRC 範例 `0x12345678` 僅示意兩欄相等，不是這份示例的實測 chec
 
 I2C reference 使用 CRC16/XMODEM、初值 0，計算範圍不含檔案最後 4 bytes；儲存 CRC16 位於檔尾前 4 bytes 起的兩個 bytes，採 little-endian。
 此範圍與 CAN／Misc 的尾端 CRC32 不同，不能交叉解讀 `MATCH`。
-Misc 更新與明確 RUN 的操作見 [Host App 更新](https://released.github.io/slide_isp_tool_for_RL78/#host-bridge-firmware)。
+Misc 更新與明確 RUN 的操作見 [Host App 更新](https://released.github.io/slide_simple_renesas_isp_tool/#host-bridge-firmware)。
 
 #### 常見組合與原始訊息
 
@@ -326,7 +326,7 @@ Misc 更新與明確 RUN 的操作見 [Host App 更新](https://released.github.
 | `Reserved metadata extension bytes must be 0xFF for this image format.` | 保留區不是契約要求的 `0xFF` | metadata 產生配置；不在保留區自行填資料 |
 | `Firmware CRC32 trailer does not match the calculated CRC32.` | 尾端 CRC32 不符 | 重新建置／封裝，避免在產出 BIN 後直接修改內容 |
 
-完整更新判定與資料傳遞見 [CAN 更新逐層導讀](https://released.github.io/slide_isp_tool_for_RL78/#can-update-walkthrough)。
+完整更新判定與資料傳遞見 [CAN 更新逐層導讀](https://released.github.io/slide_simple_renesas_isp_tool/#can-update-walkthrough)。
 通訊與裝置回覆錯誤的分類見 [錯誤資訊](#tool-error-guidance)。
 畫面欄位對應實作：[CAN 映像顯示](https://github.com/released/simple_renesas_isp_tool/blob/main/src/main_frame_image.cpp)、[狀態色彩](https://github.com/released/simple_renesas_isp_tool/blob/main/src/main_frame_status.cpp)、[Misc](https://github.com/released/simple_renesas_isp_tool/blob/main/src/main_frame_misc.cpp)、[I2C](https://github.com/released/simple_renesas_isp_tool/blob/main/src/main_frame_i2c_image.cpp)。
 
@@ -417,7 +417,7 @@ CAN 更新、Misc 更新及 Misc RUN 結束時，Tool 在 EXE 旁的 `reports/` 
 
 `Open Last Report` 開啟本次 Tool 執行期間最後成功儲存的 HTML；尚未產生時按鈕不啟用。
 重新開啟 Tool 後，可直接從 `reports/` 開啟歷史報告。
-實際畫面見 [MCU CAN device 更新報告範例](https://released.github.io/slide_isp_tool_for_RL78/#f24-device-update-example)。
+實際畫面見 [MCU CAN device 更新報告範例](https://released.github.io/slide_simple_renesas_isp_tool/#f24-device-update-example)。
 
 | 產物 | 閱讀與使用方式 |
 | --- | --- |
@@ -574,7 +574,7 @@ A／B 使用不同 IRQ mapping 與 ISR 名稱，各自執行 CS+ clean compile�
 ### 實板驗證紀錄
 
 F13 與 F24 device 的正常 CAN App 更新已完成實板驗證。
-F24 的更新報告、reset 後 App 確認與 UART counter 集中於 [F24 device 更新結果](https://released.github.io/slide_isp_tool_for_RL78/#f24-device-update-example)。
+F24 的更新報告、reset 後 App 確認與 UART counter 集中於 [F24 device 更新結果](https://released.github.io/slide_simple_renesas_isp_tool/#f24-device-update-example)。
 各測試保留自己的證據範圍；尚無對應紀錄的壓力與故障項目維持 NOT RUN。
 CAN 波形、電氣特性與斷電復原仍需對應量測或故障測試，不由正常更新報告推定。
 

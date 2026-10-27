@@ -1,4 +1,4 @@
-[知識庫首頁](https://released.github.io/) · [RL78 ISP Tool 與 MCU bridge 操作](index.html)
+[知識庫首頁](https://released.github.io/) · [Simple Renesas ISP Tool 與 MCU bridge 操作](index.html)
 
 <a id="article_top"></a>
 
@@ -200,7 +200,7 @@ Boot更新與I2C mailbox維持各自能力；不因缺少UART診斷而拒絕更�
 | Cancel | Worker清理 device／bridge交易；UI不自行關閉另一條COM |
 
 成功、失敗、取消都產生 JSON／HTML report；Tool不自動開啟瀏覽器。
-報告欄位與開啟方式見 [Firmware update report](https://released.github.io/slide_isp_tool_for_RL78/#update-html-report)；
+報告欄位與開啟方式見 [Firmware update report](https://released.github.io/slide_simple_renesas_isp_tool/#update-html-report)；
 Xmodem及I2C的格式細節見 [串列 device 契約](https://released.github.io/slide_boot_loader_for_RL78/#serial-device-engineering)。
 <!-- UART_TOOL_GUIDE_END -->
 

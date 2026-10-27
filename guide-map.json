@@ -2,7 +2,7 @@
   "version": 1,
   "pages": {
     "index": {
-      "title": "RL78 ISP Tool 與 MCU bridge 操作",
+      "title": "Simple Renesas ISP Tool 與 MCU bridge 操作",
       "description": "下載、操作與各介面指南入口。"
     },
     "downloads": {

@@ -1,6 +1,8 @@
-# RL78 ISP Tool 操作指南
+# Simple Renesas ISP Tool 操作指南
 
-- 網頁入口：<https://released.github.io/slide_isp_tool_for_RL78/>
+Simple Renesas ISP Tool 是個人開發與分享的 MCU 韌體更新及通訊測試工具。
+
+- 網頁入口：<https://released.github.io/slide_simple_renesas_isp_tool/>
 - 指南入口：`index.md`／`index.html`；完整章節位於各主題的 `.md`／`.html`。
 - 共用版型：`/notices_can/assets/style.css`、`app.js`。
 - 截圖資料：`SCREENSHOT_CHECKLIST.md`。

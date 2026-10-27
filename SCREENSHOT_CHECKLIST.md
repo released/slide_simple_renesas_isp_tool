@@ -33,7 +33,7 @@ sync_tool_operation_media.ps1 同步三段 TOOL_*_MEDIA 與公開圖；-CheckOnl
 
 ## Custom Transfer：F24 MCU CAN device
 
-四張操作圖集中於 [Custom Transfer 範例](https://released.github.io/slide_isp_tool_for_RL78/#f24-custom-transfer-example)，與 App 更新操作圖分開使用。
+四張操作圖集中於 [Custom Transfer 範例](https://released.github.io/slide_simple_renesas_isp_tool/#f24-custom-transfer-example)，與 App 更新操作圖分開使用。
 
 | 公開圖 | 可觀察內容 |
 | --- | --- |
@@ -71,5 +71,5 @@ sync_tool_operation_media.ps1 同步三段 TOOL_*_MEDIA 與公開圖；-CheckOnl
 | [firmware_update_report.png](images/tool_operation/firmware_update_report.png) | CAN device update PASS、CRC、App 啟動確認、Host COM 保留 |
 | [MCU_F24_Device_app_log.png](images/tool_operation/MCU_F24_Device_app_log.png) | boot-validated、CAN update completed、V1 counter 從 0 遞增 |
 
-完整說明集中於 [F24 device 更新結果](https://released.github.io/slide_isp_tool_for_RL78/#f24-device-update-example)。
+完整說明集中於 [F24 device 更新結果](https://released.github.io/slide_simple_renesas_isp_tool/#f24-device-update-example)。
 兩張原圖無本機路徑；公開 PNG 保留全部解碼像素並移除圖片 metadata，原始 JPEG 保存在忽略的私有目錄。

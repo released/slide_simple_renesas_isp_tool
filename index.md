@@ -3,9 +3,10 @@
 
 <a id="article_top"></a>
 
-# RL78 ISP Tool 與 MCU bridge 操作
+# Simple Renesas ISP Tool 與 MCU bridge 操作
 
-FirmwareUpgradeTool 透過 MCU bridge 連接 device，依需求選擇下載、操作、更新或通訊驗證。
+Simple Renesas ISP Tool 是個人開發與分享的 MCU 韌體更新及通訊測試工具。
+透過 MCU bridge 連接 device，依需求選擇下載、操作、更新或通訊驗證。
 Device Boot／App 開發見 [Bootloader 指南](../slide_boot_loader_for_RL78/)。
 
 ## 主題指南
@@ -35,7 +36,7 @@ Device Boot／App 開發見 [Bootloader 指南](../slide_boot_loader_for_RL78/)�
 <!-- RH850_DEVICE_BEGIN -->
 <a id="rh850-can-device"></a>
 
-## RH850 MCU CAN device 工程
+## 其他 MCU 指南
 
 RH850 的 CAN／CAN FD、App Metadata／IRQ、串列介面與 Flash 移植集中於獨立 Bootloader 指南。
 [閱讀完整章節](https://released.github.io/slide_boot_loader_for_RH850/#rh850-can-device)

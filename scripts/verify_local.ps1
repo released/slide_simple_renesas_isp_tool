@@ -4,7 +4,7 @@ $projectRoot = Split-Path -Parent $PSScriptRoot
 $webRoot = Split-Path -Parent $projectRoot
 $guideMaps=@{}
 $guideReaderPages=@()
-foreach($folder in @('slide_isp_tool_for_RL78','slide_boot_loader_for_RL78','slide_boot_loader_for_RH850')){
+foreach($folder in @('slide_simple_renesas_isp_tool','slide_boot_loader_for_RL78','slide_boot_loader_for_RH850')){
     $map=Get-Content -LiteralPath (Join-Path $webRoot ($folder+'\guide-map.json')) -Raw -Encoding UTF8 | ConvertFrom-Json
     $guideMaps[$folder]=$map
     foreach($page in $map.pages.PSObject.Properties.Name){$guideReaderPages+=($folder+'\'+$page+'.md')}
@@ -51,14 +51,14 @@ foreach ($page in $readerPages) {
 }
 Write-Host 'PASS: unique explicit anchors and one page title per reader page.'
 $navigation = Get-Content -LiteralPath (Join-Path $webRoot 'released.github.io\README.md') -Raw -Encoding UTF8
-$ispEntry = [regex]::Match($navigation, '(?m)^\| \[RL78 ISP Tool\]\(https://released\.github\.io/slide_isp_tool_for_RL78/[^\r\n]*')
-if (-not $ispEntry.Success) { throw 'Missing linked RL78 ISP Tool navigation entry.' }
+$ispEntry = [regex]::Match($navigation, '(?m)^\| \[Simple Renesas ISP Tool\]\(https://released\.github\.io/slide_simple_renesas_isp_tool/[^\r\n]*')
+if (-not $ispEntry.Success) { throw 'Missing linked Simple Renesas ISP Tool navigation entry.' }
 if ($ispEntry.Value -match '(\d+\.\d+\.\d+|Tool\d{4}|\u5de5\u7a0b\u7b2c\u4e00\u7248|19244|10963|301\u5340\u584a)') {
     throw 'Navigation must describe functions, not pin a release or benchmark.'
 }
 foreach ($page in ($guideReaderPages+@(
         'slide_boot_loader_for_RL78\basic_uart_i2c\index.md',
-        'slide_isp_tool_for_RL78\README.md', 'slide_boot_loader_for_RL78\README.md',
+        'slide_simple_renesas_isp_tool\README.md', 'slide_boot_loader_for_RL78\README.md',
         'released.github.io\README.md', 'released.github.io\README.html'))) {
     $pageText = Get-Content -LiteralPath (Join-Path $webRoot $page) -Raw -Encoding UTF8
     # ASCII escapes keep Windows PowerShell 5 source decoding unambiguous.
@@ -71,7 +71,7 @@ foreach ($page in ($guideReaderPages+@(
     }
 }
 Write-Host 'PASS: linked evergreen navigation and no draft/release milestone labels.'
-$ispText = ($guideReaderPages | Where-Object { $_.StartsWith('slide_isp_tool_for_RL78\') } |
+$ispText = ($guideReaderPages | Where-Object { $_.StartsWith('slide_simple_renesas_isp_tool\') } |
     ForEach-Object { [IO.File]::ReadAllText((Join-Path $webRoot $_)) }) -join "`n"
 $bootText = ($guideReaderPages | Where-Object { $_.StartsWith('slide_boot_loader_for_RL78\') } |
     ForEach-Object { [IO.File]::ReadAllText((Join-Path $webRoot $_)) }) -join "`n"
@@ -79,7 +79,7 @@ $resourcePattern = '(?s)<!-- PUBLIC_RESOURCES_BEGIN -->.*?<!-- PUBLIC_RESOURCES_
 $ispBlocks = [regex]::Matches($ispText, $resourcePattern)
 $bootBlocks = [regex]::Matches($bootText, $resourcePattern)
 if ($ispBlocks.Count -ne 1 -or $bootBlocks.Count -ne 1 -or
-    -not $bootBlocks[0].Value.Contains('https://released.github.io/slide_isp_tool_for_RL78/#downloads') -or
+    -not $bootBlocks[0].Value.Contains('https://released.github.io/slide_simple_renesas_isp_tool/#downloads') -or
     $bootBlocks[0].Value.Contains('raw.githubusercontent')) {
     throw 'Expected full downloads on ISP and a navigation link on Bootloader.'
 }
@@ -93,10 +93,10 @@ foreach ($anchor in @('boot-app-porting','f13-boot-decision','f24-can-device','d
         throw "Missing/duplicate device anchor: $anchor"
     }
 }
-$pages = @{'slide_isp_tool_for_RL78'=$ispText;'slide_boot_loader_for_RL78'=$bootText}
+$pages = @{'slide_simple_renesas_isp_tool'=$ispText;'slide_boot_loader_for_RL78'=$bootText}
 $homeHtml=[IO.File]::ReadAllText((Join-Path $webRoot 'released.github.io\README.html'))
 foreach ($text in (@($pages.Values)+@($navigation,$homeHtml))) {
-    foreach ($match in [regex]::Matches($text,'https://released\.github\.io/(slide_(?:isp_tool|boot_loader)_for_RL78)/#([A-Za-z0-9_-]+)')) {
+    foreach ($match in [regex]::Matches($text,'https://released\.github\.io/((?:slide_simple_renesas_isp_tool|slide_boot_loader_for_RL78))/#([A-Za-z0-9_-]+)')) {
         $site=$match.Groups[1].Value
         $anchor=$match.Groups[2].Value
         if ($anchor -ne 'article_top' -and [regex]::Matches($pages[$site],'<a id="'+[regex]::Escape($anchor)+'"></a>').Count -ne 1) {
@@ -117,8 +117,8 @@ foreach ($download in @('simple_renesas_isp_tool/main/build/FirmwareUpgradeTool.
 }
 Write-Host 'PASS: workflow anchors, seven downloads and single-owner resource navigation.'
 foreach ($entry in @('slide_boot_loader_for_RL78/#can-fd-device-engineering',
-        'slide_isp_tool_for_RL78/#can-fd-update',
-        'slide_isp_tool_for_RL78/#can-fd-custom-transfer')) {
+        'slide_simple_renesas_isp_tool/#can-fd-update',
+        'slide_simple_renesas_isp_tool/#can-fd-custom-transfer')) {
     if (-not $ispBlocks[0].Value.Contains('https://released.github.io/' + $entry)) {
         throw "Missing CAN FD entry in downloads/operation overview: $entry"
     }
@@ -133,7 +133,7 @@ function Assert-TransferExampleNavigation([string]$Text) {
         @{Project='RL78_F24_CAN_FD_Transfer';Mode='F24 CAN FD';Anchor='can-fd-custom-transfer'})) {
         $rows=[regex]::Matches($blocks[0].Value,'(?m)^\|[^\r\n]*https://github\.com/released/'+
             [regex]::Escape($transferExample.Project)+'\)[^\r\n]*\r?$')
-        $operation='https://released.github.io/slide_isp_tool_for_RL78/#'+$transferExample.Anchor
+        $operation='https://released.github.io/slide_simple_renesas_isp_tool/#'+$transferExample.Anchor
         if($rows.Count -ne 1 -or !$rows[0].Value.Contains($transferExample.Mode) -or
                 !$rows[0].Value.Contains($operation)) {
             throw "Missing/mismatched Custom Transfer example row: $($transferExample.Project)"
@@ -209,7 +209,7 @@ if ($walkBlocks.Count -ne 1 -or
     [regex]::Matches($ispText, '<a id="can-update-walkthrough"></a>').Count -ne 1 -or
     [regex]::Matches($walkBlocks[0].Value, '(?m)^```mermaid').Count -ne 9 -or
     [regex]::Matches($walkBlocks[0].Value, '(?m)^\|(?: --- \|){3,5}\r?$').Count -ne 15 -or
-    -not $bootText.Contains('https://released.github.io/slide_isp_tool_for_RL78/#can-update-walkthrough')) {
+    -not $bootText.Contains('https://released.github.io/slide_simple_renesas_isp_tool/#can-update-walkthrough')) {
     throw 'Missing/incomplete cross-layer CAN tutorial, tables, flows or navigation.'
 }
 Write-Host 'PASS: cross-layer CAN tutorial with15 tables/9 Mermaid diagrams and linked navigation.'
@@ -226,9 +226,9 @@ if ($ToolRoot) {
     if($LASTEXITCODE){throw 'Guide chapter/legacy-route checks failed.'}
 }
 if ($PreviewBase) {
-    $routes = @('/slide_isp_tool_for_RL78/', '/slide_isp_tool_for_RL78/index.md',
-        '/slide_isp_tool_for_RL78/img/benchmark_pcan.jpg',
-        '/slide_isp_tool_for_RL78/img/benchmark_mcu_log.jpg',
+    $routes = @('/slide_simple_renesas_isp_tool/', '/slide_simple_renesas_isp_tool/index.md',
+        '/slide_simple_renesas_isp_tool/img/benchmark_pcan.jpg',
+        '/slide_simple_renesas_isp_tool/img/benchmark_mcu_log.jpg',
         '/slide_boot_loader_for_RL78/', '/slide_boot_loader_for_RL78/basic_uart_i2c/',
         '/slide_boot_loader_for_RL78/basic_uart_i2c/index.md',
         '/released.github.io/README.html', '/notices_can/assets/style.css', '/notices_can/assets/app.js')

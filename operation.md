@@ -1,4 +1,4 @@
-[知識庫首頁](https://released.github.io/) · [RL78 ISP Tool 與 MCU bridge 操作](index.html)
+[知識庫首頁](https://released.github.io/) · [Simple Renesas ISP Tool 與 MCU bridge 操作](index.html)
 
 <a id="article_top"></a>
 
@@ -26,7 +26,7 @@ COM friendly name 用於選擇介面，MCU 身分由 Probe 回覆取得。
 
 選擇 COM 與 Host Baud 後按 `Open + Probe Host`，核對 `HOST BRIDGE | VERIFIED LINK` 與實際 MCU。
 下圖的 COM 已驗證，但 Misc 仍保留 Device CAN BIN，因此出現 `INVALID - HOST APP required`；連線成功與選檔相容是兩項獨立判斷。
-進行更新前，依[下載與操作總覽](https://released.github.io/slide_isp_tool_for_RL78/#downloads)載入對應目的地的 App BIN。
+進行更新前，依[下載與操作總覽](https://released.github.io/slide_simple_renesas_isp_tool/#downloads)載入對應目的地的 App BIN。
 
 圖中的版本、COM 與大小是操作範例；本機檔案與報告路徑已遮蔽，狀態與操作結果保留。
 網頁上的操作圖可點選開啟原尺寸，方便查看欄位與訊息。
@@ -102,7 +102,7 @@ CRC 驗證用於映像完整性，詳細政策如下。
 ## 更新政策與通訊速度
 
 BIN metadata 提供更新目的地、允許介面、MCU 身分與 Boot 契約。
-版本政策與密碼確認的維護操作集中於 [force 降版](https://released.github.io/slide_isp_tool_for_RL78/#force-old-version)。
+版本政策與密碼確認的維護操作集中於 [force 降版](https://released.github.io/slide_simple_renesas_isp_tool/#force-old-version)。
 Tool 將這些欄位與目前選定的 port、live device 資訊一併核對。
 
 | UI 資訊 | 來源與作用 |

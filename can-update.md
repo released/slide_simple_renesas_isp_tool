@@ -1,4 +1,4 @@
-[知識庫首頁](https://released.github.io/) · [RL78 ISP Tool 與 MCU bridge 操作](index.html)
+[知識庫首頁](https://released.github.io/) · [Simple Renesas ISP Tool 與 MCU bridge 操作](index.html)
 
 <a id="article_top"></a>
 
@@ -30,7 +30,7 @@ App Start 使用 BIN metadata；手動 override 作為額外核對值。
 以下圖片使用 F13 (MCU CAN device)，各欄數值來自所載入 BIN 與 live device；操作順序依回報模式選擇。
 F13 與 F24 device 的正常 CAN App 更新皆已完成實板驗證，使用相同的載入、探索、進 Boot、更新及 App 確認流程。
 F24 的完成報告與執行畫面見 [F24 device 更新結果](#f24-device-update-example)。
-完整[欄位與狀態判讀](https://released.github.io/slide_isp_tool_for_RL78/#tool-ui-fields)集中於 Tool operation。
+完整[欄位與狀態判讀](https://released.github.io/slide_simple_renesas_isp_tool/#tool-ui-fields)集中於 Tool operation。
 
 #### 1. 載入 Device App BIN
 
@@ -79,8 +79,8 @@ START 已接受後失聯不會沿用步驟 3 的自動返回原 App 行為；取
 
 只有 END／CRC 通過、APP_READY 與 live INFO 核對完成後，才顯示 `[COMPLETE]` 與 Device App update complete。
 正常完成會停止 Host CAN、保留 COM（Host UART），讓使用者檢查 App 與板上功能；因此 DEVICE TARGET 回到 N/A 並要求再次 Discover 是完成清理後的狀態。
-App 未確認或 CAN STOP 未確認時，依[完成提示與下一步](https://released.github.io/slide_isp_tool_for_RL78/#update-completion)處理，不自動重寫。
-Tool 自動保存 Firmware update report；右下 `MESSAGE LOG` 的 `Open Last Report` 可開啟報告，操作見[更新報告](https://released.github.io/slide_isp_tool_for_RL78/#update-html-report)。
+App 未確認或 CAN STOP 未確認時，依[完成提示與下一步](https://released.github.io/slide_simple_renesas_isp_tool/#update-completion)處理，不自動重寫。
+Tool 自動保存 Firmware update report；右下 `MESSAGE LOG` 的 `Open Last Report` 可開啟報告，操作見[更新報告](https://released.github.io/slide_simple_renesas_isp_tool/#update-html-report)。
 
 [![Device 更新完成並確認 App 後停止 CAN 保留 COM](images/tool_operation/tool_CAN_update6_after_update.jpg)](images/tool_operation/tool_CAN_update6_after_update.jpg)
 
@@ -124,7 +124,7 @@ HTML 報告的 `PASS | CAN device update` 與 `[COMPLETE]` 表示寫入、CRC �
 | `App version / Build / Image bytes` 比對 | 完整 HTML 的 live 值與載入 BIN 相符，代表重啟後辨識到此次 App |
 | `CAN stopped; Host COM remains open` | App 確認後停止 CAN、保留 Host COM；下一次更新先重新 Discover |
 
-開啟方式、完整欄位與錯誤判讀集中於 [更新報告](https://released.github.io/slide_isp_tool_for_RL78/#update-html-report)。
+開啟方式、完整欄位與錯誤判讀集中於 [更新報告](https://released.github.io/slide_simple_renesas_isp_tool/#update-html-report)。
 
 #### Device UART 執行紀錄
 
@@ -135,7 +135,7 @@ V1 是可編輯的觀察標籤，不取代 metadata 的版本號；修改位置�
 [![F24 device 更新後 App UART 顯示 V1 與遞增 counter](images/tool_operation/MCU_F24_Device_app_log.png)](images/tool_operation/MCU_F24_Device_app_log.png)
 
 以上確認正常 115200 Host Link／500K CAN 更新與 App 執行。
-250K／1M、長時間壓力、其他 IRQ、取消、拔線及斷電復原各自依 [實板驗證矩陣](https://released.github.io/slide_isp_tool_for_RL78/#update-confirmation) 保留測試結果。
+250K／1M、長時間壓力、其他 IRQ、取消、拔線及斷電復原各自依 [實板驗證矩陣](https://released.github.io/slide_simple_renesas_isp_tool/#update-confirmation) 保留測試結果。
 <!-- TOOL_DEVICE_MEDIA_END -->
 
 <a id="can-upgrade-performance"></a>
@@ -173,7 +173,7 @@ F24 CAN FD device 的一般 App 寫入、END CRC、APP_READY 與 UART counter �
 | PC 到 Host Link | 可先用115200；此速度與 CAN nominal／data phase 分開設定 |
 
 若 host 缺少 bit13，Tool 在寫入前拒絕更新。
-使用 [Misc Host App 更新](https://released.github.io/slide_isp_tool_for_RL78/#host-bridge-firmware)
+使用 [Misc Host App 更新](https://released.github.io/slide_simple_renesas_isp_tool/#host-bridge-firmware)
 載入 `RL78_F24_Bridge_app_bridge_update.bin`，完成後明確 RUN、重新 Probe 核對能力。
 此流程更新 Host App，不改 Host Boot。
 
@@ -206,10 +206,10 @@ F24 CAN FD device 的一般 App 寫入、END CRC、APP_READY 與 UART counter �
 START 本身不擦除 Flash，區塊 COMMIT 驗證通過後才由 Flash driver 寫入。
 
 
-報告及成功／失敗欄位沿用 [更新確認與驗證紀錄](https://released.github.io/slide_isp_tool_for_RL78/#update-confirmation)。
-END 後的等待與查詢時序見 [重啟等待與 App 確認](https://released.github.io/slide_isp_tool_for_RL78/#app-restart-confirmation)；
+報告及成功／失敗欄位沿用 [更新確認與驗證紀錄](https://released.github.io/slide_simple_renesas_isp_tool/#update-confirmation)。
+END 後的等待與查詢時序見 [重啟等待與 App 確認](https://released.github.io/slide_simple_renesas_isp_tool/#app-restart-confirmation)；
 完成提示與報告同時保留映像驗證結果及 Host 計數警告。
-Metadata 的逐欄內容見 [共用欄位指南](https://released.github.io/slide_isp_tool_for_RL78/#tool-ui-fields)，
+Metadata 的逐欄內容見 [共用欄位指南](https://released.github.io/slide_simple_renesas_isp_tool/#tool-ui-fields)，
 不以離線 BIN 資訊代替 live device 身分。
 
 ### 三幀區塊與 Host Link
