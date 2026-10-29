@@ -19,7 +19,7 @@
     },
     "can-update": {
       "title": "CAN／CAN FD App 更新",
-      "description": "Classical CAN：F13／F24；CAN FD：F24。"
+      "description": "Classical CAN：F13／F24／RH850；CAN FD：F24／RH850。"
     },
     "can-protocol": {
       "title": "CAN 更新逐層導讀",
@@ -31,7 +31,7 @@
     },
     "custom-transfer": {
       "title": "Custom Transfer 通訊驗證",
-      "description": "F13／F24 Classical CAN 與 F24 CAN FD 的獨立通訊測試。"
+      "description": "F13／F24／RH850 Classical CAN，以及F24／RH850 CAN FD的獨立通訊測試。"
     },
     "host-firmware": {
       "title": "MCU host 韌體與自身更新",
@@ -438,6 +438,10 @@
     "rh850-can-device": {
       "page": "index.html",
       "anchor": "rh850-can-device"
+    },
+    "can-misc-與-i2c-的顯示差異": {
+      "page": "status-and-reports.html",
+      "anchor": "can-misc-與-i2c-的顯示差異"
     }
   }
 }

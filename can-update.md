@@ -4,9 +4,14 @@
 
 # CAN／CAN FD App 更新
 
-Classical CAN：F13／F24；CAN FD：F24。
+Classical CAN：F13／F24／RH850；CAN FD：F24／RH850。
 
 <a id="f13-device-update"></a>
+
+操作順序適用支援此更新契約的F13／F24／RH850 device；下方Classical操作圖使用F13。
+平台位址、IRQ與Flash寫入單位見 [RL78工程](../slide_boot_loader_for_RL78/can-device.html)／[RH850工程](../slide_boot_loader_for_RH850/can-device.html)。
+CAN FD的模式、BRS及資料幀見 [CAN FD操作](#can-fd-update)。
+
 <a id="mcu-can-device"></a>
 
 ## MCU CAN device：App 更新
@@ -156,6 +161,7 @@ V1 是可編輯的觀察標籤，不取代 metadata 的版本號；修改位置�
 此設定使用 nominal 500 kbit/s、data 2 Mbit/s、BRS，以及 64-byte FD 資料幀。
 Tool 與 MCU CAN host 負責傳輸，MCU CAN device Boot 負責映像驗證與 Flash 寫入。
 F24 CAN FD device 的一般 App 寫入、END CRC、APP_READY 與 UART counter 已有實板紀錄。
+RH850使用相同Tool操作；EVM接線、256-byte Flash page與實測耗時見 [RH850工程](https://released.github.io/slide_boot_loader_for_RH850/can-device.html#guide-can-device-5)／[更新耗時](https://released.github.io/slide_boot_loader_for_RH850/app-development.html#rh850-update-timing)。
 驗證包含初次 Boot 更新，以及 App → Enter Boot → 更新 → App 確認；
 重啟等待後的更新紀錄中，七項 Host 錯誤計數差值均為零。
 長時間連續更新、queue 壓力與故障／斷電恢復仍各自保留驗證範圍。

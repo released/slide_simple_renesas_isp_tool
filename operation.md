@@ -13,7 +13,7 @@ COM／Host 識別、畫面、接線、更新政策與錯誤資訊。
 1. `Refresh` 後選取 `COMx: Windows friendly name`。
 2. 選擇 Host Baud，按 `Open + Probe Host`。
 3. 核對 HOST BRIDGE 卡片的 MCU、board ID 與 firmware 資訊。
-4. 在 CAN／I2C 頁選擇 host 回報的 Bridge port。
+4. 在 CAN／I2C／UART / Xmodem 頁選擇 host 回報的 Bridge port 與對應 workflow。
 5. 功能是否可執行，會顯示於狀態列及 prerequisite 區。
 
 `Reset Host` 重新啟動 host；`Disconnect` 結束 bus／target 連線；`Close COM` 結束 UART 連線並取消工作。
@@ -48,7 +48,7 @@ COM friendly name 用於選擇介面，MCU 身分由 Probe 回覆取得。
 卡片同時顯示文字；滑鼠停留時可閱讀完整內容。
 
 主畫面保留12項metadata；`BIN Details...`可查看全部20項。欄位、正常／錯誤訊息與處理方式集中於 [欄位與狀態判讀](#tool-ui-fields)。
-其中也分開說明離線 BIN 與 live 裝置資料，以及 CAN／Misc／I2C 的顯示差異。
+其中也分開說明離線 BIN 與 live 裝置資料，以及 Device ISP／Misc／Reference 的顯示差異。
 
 最上方為 Host 連線，次上方為 BIN／裝置資訊；下方分成周邊設定、載入／更新映像、Message Log。
 底部顯示進度與耗時，只有 Log 歷史和下拉選單捲動。
@@ -64,7 +64,8 @@ COM friendly name 用於選擇介面，MCU 身分由 Probe 回覆取得。
 | CAN bus | CAN H／L、共地、兩端終端電阻、相同 bitrate |
 | F13 device EVB | X1 4MHz、CAN16MHz；TJA1050T VCC 5V、S LOW |
 | F24 device Target Board | X1 4MHz、CAN40MHz；接線依該板原理圖 |
-| I2C | IICA0 P62／P63、100kHz，pull-up 電壓依 slave 規格 |
+| I2C | IICA0 P62／P63；範例100kHz、7-bit0x20，速度與位址依工程及host能力選擇；pull-up電壓依slave規格 |
+| UART／Xmodem | Bridge UART1 P74 TX／P75 RX，Device baud與Host Baud分開；[接線與設定](serial-isp.html#serial-update-requirements) |
 
 終端電阻以斷電狀態量測。
 CAN analyzer 設定與 bus bitrate 一致；active 節點提供 ACK。
@@ -117,13 +118,19 @@ UI、worker 與 device Boot 分別執行對應驗證；改變 port／address／r
 
 Metadata 位址與欄位格式見 [Device 映像對照](https://released.github.io/slide_boot_loader_for_RL78/#flash-metadata-can-reference)。
 
-### 三條通訊路徑的速度
+<a id="三條通訊路徑的速度"></a>
 
-| 路徑 | 設定來源 | 目前設定 |
+### 通訊路徑與速度
+
+| 路徑 | 設定來源 | 範例與調整方式 |
 | --- | --- | --- |
-| PC ↔ MCU CAN host 的 Host Link | Tool Host Baud 與 host live 能力 | 上電115200，可協商460800／921600 |
-| MCU CAN host ↔ MCU CAN device | device Boot／App 編譯設定與 metadata | Classical CAN 500K |
-| PC ↔ host Boot 的自身 App 更新 | host Boot 描述器 | Misc／UART115200 |
+| PC ↔ MCU host 的 Host Link | Tool Host Baud 與 host live 能力 | 上電115200，可協商460800／921600；與 device bus 速度獨立 |
+| Host ↔ CAN device | Device Boot／App driver、metadata 與 Tool CAN Mode／rate | Classical 500K；FD nominal500K／data2M、BRS；選項需符合 live 能力與映像 |
+| Host ↔ UART／Xmodem device | Boot／App UART 分頻、metadata、Tool Device baud | 範例115200、8-N-1；可選或輸入 baud，仍須符合實際時脈分頻與 host 能力 |
+| Host ↔ I2C device | Slave address、Boot／App timing、metadata 與 Tool I2C 設定 | 範例7-bit0x20／100kHz；address不左移，速度依 host 宣告能力選擇 |
+| PC ↔ host Boot 的自身 App 更新 | Host Boot 描述器 | Misc／UART115200 |
+
+Device 串列配置的必要一致項目見 [通訊設定與更新必要條件](https://released.github.io/slide_simple_renesas_isp_tool/serial-isp.html#serial-update-requirements)。
 
 Host Link 換速完成後會重新確認 host 身分。
 尚未確認時，host 在2秒內回到115200；已確認後維持該次連線速度。
@@ -155,7 +162,7 @@ flowchart TD
     META --> VALID{"驗證通過？"}
     VALID -->|否| STOP
     VALID -->|是| WRITE["更新 App；END 驗證 Flash 映像"]
-    WRITE --> BOOT["重啟時由 MCU CAN device Boot<br/>驗證映像後啟動 App"]
+    WRITE --> BOOT["重啟時由 MCU device Boot<br/>驗證映像後啟動 App"]
 ```
 
 CRC提供完整性檢查。映像驗證與實板功能測試分別記錄。

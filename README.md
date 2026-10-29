@@ -9,7 +9,7 @@ Simple Renesas ISP Tool 是個人開發與分享的 MCU 韌體更新及通訊測
 
 本站提供 Tool 連線、共用 BIN／metadata／log、Custom Transfer、CAN／串列 device App 更新、I2C 探索及 Misc Host App 更新。
 公開導覽使用功能名稱；量測版本與雜湊由交付紀錄提供。
-首頁 `ISP_MODE_NAV` 區分 Classical CAN（F13／F24）、CAN FD（F24）及 Custom Transfer 三種範例，僅提供操作跳轉。
+首頁 `ISP_MODE_NAV` 區分 Classical CAN（F13／F24／RH850）、CAN FD（F24／RH850）及 Custom Transfer 三種範例，僅提供操作跳轉。
 
 ## 主題頁
 
@@ -18,10 +18,10 @@ Simple Renesas ISP Tool 是個人開發與分享的 MCU 韌體更新及通訊測
 | [下載與產物](downloads.html) | Tool、Host／Device 原始碼及適用的燒錄檔／更新 BIN |
 | [連線與操作](operation.html) | COM、Host 識別、畫面、接線與更新政策 |
 | [欄位與報告](status-and-reports.html) | 狀態、Metadata 判讀、更新確認、進度、取消與報告 |
-| [CAN／CAN FD 更新](can-update.html) | Classical CAN F13／F24、CAN FD F24 的 App 更新 |
+| [CAN／CAN FD 更新](can-update.html) | Classical CAN F13／F24／RH850、CAN FD F24／RH850的App更新 |
 | [CAN 逐層導讀](can-protocol.html) | Tool、MCU CAN host 與 MCU CAN device 的流程對照 |
 | [串列 ISP 操作](serial-isp.html) | UART／Xmodem／I2C 與可調通訊設定 |
-| [Custom Transfer](custom-transfer.html) | F13／F24 Classical CAN 與 F24 CAN FD 的通訊測試 |
+| [Custom Transfer](custom-transfer.html) | F13／F24／RH850 Classical CAN與F24／RH850 CAN FD的通訊測試 |
 | [Host 韌體](host-firmware.html) | Misc 更新、Host 工程與向量設定 |
 | [Device 工程入口](device-guides.html) | Boot／App、Metadata、IRQ 與移植的主題連結 |
 

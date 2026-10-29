@@ -11,11 +11,11 @@ Tool、Host 與 Device 原始碼、安裝檔及更新 BIN。
 
 ## 下載與操作總覽
 
-Host 透過 Host Link 連接 PC 並橋接 CAN；device 是 CAN 另一端接受更新的 MCU。
-F13 (MCU CAN device)、F24 (MCU CAN device) 各自具有獨立的 Transfer／Boot／App 工程。
+Host 透過 Host Link 連接 PC，再經選定的 CAN、UART 或 I2C 連接 device。
+F13／F24 (MCU CAN device) 與 RH850 各自具有獨立的 Transfer／Boot／App 工程。
 F24 (MCU CAN host) 使用獨立的 Bridge Boot／App，透過 Misc／UART 更新自身 App。
 
-以下連結提供 Tool、MCU CAN host 與 MCU CAN device 的下載及原始碼。
+以下連結提供 Tool、MCU host 與 MCU device 的下載及工程說明。
 首次安裝Boot使用燒錄器，之後更新App才使用對應的Tool流程；不可把Host與Device映像互換。
 
 | 項目 | 下載／原始碼／說明 | 適用方式 |
@@ -30,10 +30,13 @@ F24 (MCU CAN host) 使用獨立的 Bridge Boot／App，透過 Misc／UART 更新
 | F24 (MCU CAN device) Classical CAN 通訊測試 | [Transfer 原始碼](https://github.com/released/RL78_F24_CAN_Transfer)／[操作與截圖](https://released.github.io/slide_simple_renesas_isp_tool/#f24-custom-transfer-example) | `RL78_F24_CAN_Transfer` 獨立工程；Custom Transfer 不擦寫 Flash |
 | F24 (MCU CAN device) CAN FD Boot／App | [工程配置與建置說明](https://released.github.io/slide_boot_loader_for_RL78/#can-fd-device-engineering) | 燒錄器初裝 FD Boot；Tool 使用配對的 FD App update BIN。連結為工程說明 |
 | F24 (MCU CAN device) CAN FD 通訊測試 | [Transfer 原始碼](https://github.com/released/RL78_F24_CAN_FD_Transfer)／[CAN FD 操作](https://released.github.io/slide_simple_renesas_isp_tool/#can-fd-custom-transfer) | `RL78_F24_CAN_FD_Transfer` 獨立工程；不使用更新 BIN、不擦寫 Flash |
+| RH850 Classical CAN／CAN FD | [工程、EVM CAN port 與建置產物](https://released.github.io/slide_boot_loader_for_RH850/can-device.html) | Boot／App／Transfer 各自建置；App 更新與 Transfer 使用不同工程及產物 |
+| UART／Xmodem／I2C device | [RL78 工程與周邊](https://released.github.io/slide_boot_loader_for_RL78/serial-device.html)／[RH850 工程與周邊](https://released.github.io/slide_boot_loader_for_RH850/serial-device.html) | 選擇單一更新介面的 Boot／App；另保留獨立 Log UART |
 
 F24 host firmware 使用完整 Tool repository，包含 firmware 共用來源與 scripts。
-F13 Boot與App需以原repository名稱放在同一父目錄，App會引用相鄰Boot；Download ZIP
-解壓後請移除-main尾碼。先build Boot，再build App；版本、metadata、IRQ ABI與CRC仍須相容。
+Device 的 Boot、App 與 Transfer 各自持有來源、設定與工具，可分開建置。
+App-only 建置不需要 Boot checkout；實際搭配安裝的 Boot／App 仍須符合 metadata、IRQ ABI、通訊與分區契約。
+App 根目錄的 `build.ps1` 會執行本工程的產生、編譯、封裝及驗證。
 
 ### 交付檔與安裝範圍
 
@@ -52,7 +55,8 @@ F24 App 原始 `.mot` 與 F13 原始專案 `.hex` 是編譯／封裝輸入。
 正式安裝使用已加入 metadata／CRC 的 `_flash.mot`、`flash_app_variable_CRC.hex` 或配套合併 HEX；日常更新使用對應的更新 BIN。
 以燒錄器重燒 Boot／App 前，核對實際 MCU、檔案位址及 erase 設定；分區映像不代表燒錄器一定採分區擦除。
 
-原始碼維護可使用 Tool 根目錄的 `github_push.bat`，同步 F13 Boot／App、F24 device 的 Classical CAN 與 CAN FD Transfer／Boot／App，以及 Tool（含 F24 MCU CAN host）。
+原始碼維護用的 `github_push.bat` 僅處理 F13 Classical CAN、F24 Classical CAN 與 F24 CAN FD 的 Transfer／Boot／App，共九個 repository。
+Tool／Host、RH850、串列工程與網站由各自的維護流程處理；此腳本不包含它們。
 保留檔清單、本機 `tmp` 排除、確認與恢復方式見 [GitHub 原始碼與交付檔同步](https://github.com/released/simple_renesas_isp_tool/blob/main/docs/GITHUB_PUBLISH_zh-TW.md)。
 
 ### 操作與工程入口

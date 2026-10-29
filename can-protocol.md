@@ -16,7 +16,7 @@
 [MD 原稿](https://github.com/released/simple_renesas_isp_tool/blob/main/docs/CAN_UPDATE_WALKTHROUGH_zh-TW.md)與
 [可下載 PDF](https://github.com/released/simple_renesas_isp_tool/blob/main/docs/CAN_UPDATE_WALKTHROUGH_zh-TW.pdf)可供離線對照。
 
-本篇只描述現有 CAN Upgrade：Classical CAN、控制 ID `0x700/0x701`、raw data IDs `0x720..0x727`，
+本篇以 **F13 Classical CAN** 的 CAN Upgrade 為範例：控制 ID `0x700/0x701`、raw data IDs `0x720..0x727`，
 範例 App 起點 `0x2000`、metadata 位於 image offset `0x100..0x1FF`。這些是此範例契約，不是所有 MCU 的固定值。
 Host 自身 App 的更新操作見 [Misc／UART](https://released.github.io/slide_simple_renesas_isp_tool/#host-bridge-firmware)。
 
@@ -252,6 +252,10 @@ END ACK 的 detail 則是 image_size/4 的低16 bits。欄位位置相同，不�
 
 ### J. COMMIT 才是 RAM → Flash 的界線
 
+以下逐4-byte寫入與1KiB擦除邊界適用F13。
+RH850 使用256-byte Flash page buffer，單次64-byte COMMIT先驗證並收進page；湊滿page或到映像末端才提交Flash。
+完整差異見 [RH850 區塊與page寫入](https://released.github.io/slide_boot_loader_for_RH850/can-device.html#rh850-can-block-write)。
+
 ```mermaid
 flowchart TD
     C["BLOCK_COMMIT：BlockCheck<br/>BEGIN offset／CRC／bitmap／RAM CRC"] --> Q{"全部通過？"}
@@ -336,10 +340,10 @@ flowchart TD
 | F24 burst record 驗證 | [can_burst.inc](https://github.com/released/simple_renesas_isp_tool/blob/main/firmware/common/can_burst.inc) | `cb_decode`／`cb_next` |
 | F24 CAN 非阻塞 transaction | [host_link_can_process.inc](https://github.com/released/simple_renesas_isp_tool/blob/main/firmware/RL78_F24_Bridge_app/host_link_can_process.inc) | `process_can_transaction`／`next_burst_frame` |
 | F24 driver／RX queue | [can_fd_module.c](https://github.com/released/simple_renesas_isp_tool/blob/main/firmware/RL78_F24_Bridge_app/can_fd_module.c) | `CAN_HostTransmit`／`CAN_HostPollTransmit`／`CAN_RxQueuePop` |
-| F13 CAN 接收與 Flash 入口 | [can_boot_transport.c](https://github.com/released/RL78_F13_Boot_loader_CAN/blob/main/can_boot_transport.c) | `CAN_BootRead`／`CAN_BootReceive`／`CAN_BootWrite`／`CAN_BootSend` |
+| F13 CAN 接收與 Flash 入口 | [can_boot_transport.c](https://github.com/released/RL78_F13_Boot_loader_CAN/blob/main/hal/isp/can_boot_transport.c) | `CAN_BootRead`／`CAN_BootReceive`／`CAN_BootWrite`／`CAN_BootSend` |
 | F13 metadata staging／契約 | [can_boot_metadata.inc](https://github.com/released/RL78_F13_Boot_loader_CAN/blob/main/can_boot_metadata.inc) | `MetadataStage`／`MetadataSeal`／`MetadataValid` |
-| F13 raw segments／bitmap／CRC | [can_boot_block.inc](https://github.com/released/RL78_F13_Boot_loader_CAN/blob/main/can_boot_block.inc) | `BlockBegin`／`BlockSegment`／`BlockCheck` |
-| F13 reset 與重新驗證 | [r_main.c](https://github.com/released/RL78_F13_Boot_loader_CAN/blob/main/r_main.c) | `boot_main`／`verify_application_checksum`；配合 Boot decision 圖 |
+| F13 raw segments／bitmap／CRC | [can_boot_block.inc](https://github.com/released/RL78_F13_Boot_loader_CAN/blob/main/hal/isp/can_boot_block.inc) | `BlockBegin`／`BlockSegment`／`BlockCheck` |
+| F13 reset 與重新驗證 | [custom_func.c](https://github.com/released/RL78_F13_Boot_loader_CAN/blob/main/custom_func.c) | `hardware_init`／`loop`／`verify_application_checksum`；`r_main.c` 保留啟動 adapter |
 
 若要改成自己的專案：先固定 partition／vector ABI／board clock，再由 image build 設定產生 metadata／CRC；
 同步修改 Tool target profile 與 device Boot 的契約，最後對照本篇每一關驗證。
@@ -347,7 +351,7 @@ flowchart TD
 更換更新介面或映像契約則必須重新評估 Boot。
 詳見[Boot/App 移植工程](https://released.github.io/slide_boot_loader_for_RL78/#boot-app-porting)。
 
-本篇是現行程式的導讀，不是新一輪板測報告。實體斷線／斷電、完整故障矩陣、高速長時間可靠性，
+實體斷線／斷電、完整故障矩陣、高速長時間可靠性，
 以及各自訂 App 的 IRQ／啟動，仍須在對應硬體上留存驗證紀錄。
 <!-- CAN_WALKTHROUGH_END -->
 

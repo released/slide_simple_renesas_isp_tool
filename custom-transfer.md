@@ -4,7 +4,7 @@
 
 # Custom Transfer 通訊驗證
 
-F13／F24 Classical CAN 與 F24 CAN FD 的獨立通訊測試。
+F13／F24／RH850 Classical CAN，以及F24／RH850 CAN FD的獨立通訊測試。
 
 <a id="custom-transfer"></a>
 
@@ -21,6 +21,8 @@ Custom Transfer 搭配 device 的獨立 Transfer 工程。
 | F13 Classical CAN | [RL78_F13_CAN_Transfer](https://github.com/released/RL78_F13_CAN_Transfer) | Classical CAN／500K | [F13 量測範例](https://released.github.io/slide_simple_renesas_isp_tool/#f13-transfer-example) |
 | F24 Classical CAN | [RL78_F24_CAN_Transfer](https://github.com/released/RL78_F24_CAN_Transfer) | Classical CAN／500K | [F24 操作與截圖](https://released.github.io/slide_simple_renesas_isp_tool/#f24-custom-transfer-example) |
 | F24 CAN FD | [RL78_F24_CAN_FD_Transfer](https://github.com/released/RL78_F24_CAN_FD_Transfer) | CAN FD／500K／2M、BRS | [CAN FD 操作與中斷接收](https://released.github.io/slide_simple_renesas_isp_tool/#can-fd-custom-transfer) |
+| RH850 Classical CAN | [工程與 EVM 接線](https://released.github.io/slide_boot_loader_for_RH850/can-device.html#rh850-can-device) | Classical CAN／500K | Device 啟用 CAN1／CAN4，依實際接線逐一測試 |
+| RH850 CAN FD | [工程與 FD 設定](https://released.github.io/slide_boot_loader_for_RH850/can-device.html#guide-can-device-5) | CAN FD／500K／2M、BRS | 使用 FD Transfer，核對 8-byte 命令及 64-byte ECHO |
 
 ### Classical CAN 操作
 
@@ -303,7 +305,7 @@ UART 輸出會增加主迴圈延遲；吞吐量量測時可將兩個 trace 開�
 
 ### 工程與產物
 
-FD Transfer與 `RL78_F24_Boot_loader_CAN_FD` 放在同一父目錄。
+FD Transfer 自備 `hal` 來源、header 與建置工具，可單獨建置，不需要 Boot checkout。
 在FD Transfer目錄使用Windows PowerShell5.1：
 
 ```powershell

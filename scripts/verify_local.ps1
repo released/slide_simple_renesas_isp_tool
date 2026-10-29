@@ -79,7 +79,7 @@ $resourcePattern = '(?s)<!-- PUBLIC_RESOURCES_BEGIN -->.*?<!-- PUBLIC_RESOURCES_
 $ispBlocks = [regex]::Matches($ispText, $resourcePattern)
 $bootBlocks = [regex]::Matches($bootText, $resourcePattern)
 if ($ispBlocks.Count -ne 1 -or $bootBlocks.Count -ne 1 -or
-    -not $bootBlocks[0].Value.Contains('https://released.github.io/slide_simple_renesas_isp_tool/#downloads') -or
+    -not $bootBlocks[0].Value.Contains('https://released.github.io/slide_simple_renesas_isp_tool/downloads.html#downloads') -or
     $bootBlocks[0].Value.Contains('raw.githubusercontent')) {
     throw 'Expected full downloads on ISP and a navigation link on Bootloader.'
 }
@@ -209,7 +209,7 @@ if ($walkBlocks.Count -ne 1 -or
     [regex]::Matches($ispText, '<a id="can-update-walkthrough"></a>').Count -ne 1 -or
     [regex]::Matches($walkBlocks[0].Value, '(?m)^```mermaid').Count -ne 9 -or
     [regex]::Matches($walkBlocks[0].Value, '(?m)^\|(?: --- \|){3,5}\r?$').Count -ne 15 -or
-    -not $bootText.Contains('https://released.github.io/slide_simple_renesas_isp_tool/#can-update-walkthrough')) {
+    $bootText -notmatch '(https://released\.github\.io/|\.\./)slide_simple_renesas_isp_tool/can-protocol\.html') {
     throw 'Missing/incomplete cross-layer CAN tutorial, tables, flows or navigation.'
 }
 Write-Host 'PASS: cross-layer CAN tutorial with15 tables/9 Mermaid diagrams and linked navigation.'
