@@ -442,6 +442,10 @@
     "can-misc-與-i2c-的顯示差異": {
       "page": "status-and-reports.html",
       "anchor": "can-misc-與-i2c-的顯示差異"
+    },
+    "tool-image-loading": {
+      "page": "status-and-reports.html",
+      "anchor": "tool-image-loading"
     }
   }
 }

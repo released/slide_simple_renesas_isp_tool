@@ -20,6 +20,8 @@ COM／Host 識別、畫面、接線、更新政策與錯誤資訊。
 COM friendly name 用於選擇介面，MCU 身分由 Probe 回覆取得。
 
 <!-- TOOL_CONNECT_MEDIA_BEGIN -->
+COM 清單為空時，先核對裝置管理員的連接埠、USB 資料線與驅動，再按 `Refresh`；板子有供電不代表 USB 串口已被辨識。
+
 <a id="tool-connect-example"></a>
 
 ### COM 連線操作圖

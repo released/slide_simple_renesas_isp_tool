@@ -55,8 +55,8 @@ F24 App 原始 `.mot` 與 F13 原始專案 `.hex` 是編譯／封裝輸入。
 正式安裝使用已加入 metadata／CRC 的 `_flash.mot`、`flash_app_variable_CRC.hex` 或配套合併 HEX；日常更新使用對應的更新 BIN。
 以燒錄器重燒 Boot／App 前，核對實際 MCU、檔案位址及 erase 設定；分區映像不代表燒錄器一定採分區擦除。
 
-原始碼維護用的 `github_push.bat` 僅處理 F13 Classical CAN、F24 Classical CAN 與 F24 CAN FD 的 Transfer／Boot／App，共九個 repository。
-Tool／Host、RH850、串列工程與網站由各自的維護流程處理；此腳本不包含它們。
+原始碼維護用的 `github_push.bat` 同步十五個 F13／F24／RH850 Classical CAN／CAN FD device repository，以及 Tool 的來源、EXE、文件與選定的 F24 host Boot／App，共十六個 repository。
+未驗證韌體及其專用資料保留在本機；網站由 `/web` 的 `push-all.cmd` 發佈。編譯與文件同步完成後，先執行 `github_push.bat`，再執行 `push-all.cmd`。
 保留檔清單、本機 `tmp` 排除、確認與恢復方式見 [GitHub 原始碼與交付檔同步](https://github.com/released/simple_renesas_isp_tool/blob/main/docs/GITHUB_PUBLISH_zh-TW.md)。
 
 ### 操作與工程入口
