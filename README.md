@@ -1,11 +1,10 @@
 # Simple Renesas ISP Tool 操作指南
 
-Simple Renesas ISP Tool 是個人開發與分享的 MCU 韌體更新及通訊測試工具。
+Simple Renesas ISP Tool 提供 MCU 韌體更新與通訊測試功能。
 
 - 網頁入口：<https://released.github.io/slide_simple_renesas_isp_tool/>
 - 指南入口：`index.md`／`index.html`；完整章節位於各主題的 `.md`／`.html`。
 - 共用版型：`/notices_can/assets/style.css`、`app.js`。
-- 截圖資料：`SCREENSHOT_CHECKLIST.md`。
 
 本站提供 Tool 連線、共用 BIN／metadata／log、Custom Transfer、CAN／串列 device App 更新、I2C 探索及 Misc Host App 更新。
 公開導覽使用功能名稱；量測版本與雜湊由交付紀錄提供。
@@ -37,9 +36,6 @@ Simple Renesas ISP Tool 是個人開發與分享的 MCU 韌體更新及通訊測
 原稿位於 [Tool docs](https://github.com/released/simple_renesas_isp_tool/tree/main/docs)。
 `scripts/web_guide_sections.json` 定義主題歸屬。
 同步後，完整章節只保留在所屬頁面，其他頁面使用跳轉連結。
-
-原始碼與交付檔的發佈前檢查、本機資料追蹤排除及重試方式，見
-[GitHub 維護操作](https://github.com/released/simple_renesas_isp_tool/blob/main/docs/GITHUB_PUBLISH_zh-TW.md)。
 
 | 本站完整主題 | 原稿／同步腳本 |
 | --- | --- |

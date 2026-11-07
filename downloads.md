@@ -55,10 +55,6 @@ F24 App 原始 `.mot` 與 F13 原始專案 `.hex` 是編譯／封裝輸入。
 正式安裝使用已加入 metadata／CRC 的 `_flash.mot`、`flash_app_variable_CRC.hex` 或配套合併 HEX；日常更新使用對應的更新 BIN。
 以燒錄器重燒 Boot／App 前，核對實際 MCU、檔案位址及 erase 設定；分區映像不代表燒錄器一定採分區擦除。
 
-原始碼維護用的 `github_push.bat` 同步十五個 F13／F24／RH850 Classical CAN／CAN FD device repository，以及 Tool 的來源、EXE、文件與選定的 F24 host Boot／App，共十六個 repository。
-未驗證韌體及其專用資料保留在本機；網站由 `/web` 的 `push-all.cmd` 發佈。編譯與文件同步完成後，先執行 `github_push.bat`，再執行 `push-all.cmd`。
-保留檔清單、本機 `tmp` 排除、確認與恢復方式見 [GitHub 原始碼與交付檔同步](https://github.com/released/simple_renesas_isp_tool/blob/main/docs/GITHUB_PUBLISH_zh-TW.md)。
-
 ### 操作與工程入口
 
 | 想了解的動作 | 網站操作／流程圖 | Tool docs中的詳細說明 |
@@ -76,12 +72,12 @@ F24 App 原始 `.mot` 與 F13 原始專案 `.hex` 是編譯／封裝輸入。
 
 <a id="tool-bridge-flow"></a>
 
-先用[CAN 更新逐層導讀](https://released.github.io/slide_simple_renesas_isp_tool/#can-update-walkthrough)
-對照 Tool 操作／BIN 驗證、MCU CAN host 轉送、MCU CAN device metadata／receive／Flash 的表格與流程圖；
-[MD](https://github.com/released/simple_renesas_isp_tool/blob/main/docs/CAN_UPDATE_WALKTHROUGH_zh-TW.md)／[PDF](https://github.com/released/simple_renesas_isp_tool/blob/main/docs/CAN_UPDATE_WALKTHROUGH_zh-TW.pdf)可離線閱讀。
+[CAN 更新逐層導讀](https://released.github.io/slide_simple_renesas_isp_tool/#can-update-walkthrough)
+對照 Tool 操作／BIN 驗證、MCU CAN host 轉送、MCU CAN device metadata／receive／Flash；
+[MD](https://github.com/released/simple_renesas_isp_tool/blob/main/docs/CAN_UPDATE_WALKTHROUGH_zh-TW.md)／[PDF](https://github.com/released/simple_renesas_isp_tool/blob/main/docs/CAN_UPDATE_WALKTHROUGH_zh-TW.pdf)提供相同內容的離線版本。
 
 Flash mapping、metadata全部256個byte的address／範例值、產生與解析程式，以及CAN逐byte格式，
-請讀[Flash／Metadata／CAN移植對照](https://released.github.io/slide_boot_loader_for_RL78/#flash-metadata-can-reference)。
+集中於[Flash／Metadata／CAN移植對照](https://released.github.io/slide_boot_loader_for_RL78/#flash-metadata-can-reference)。
 
 <!-- PUBLIC_RESOURCES_END -->
 

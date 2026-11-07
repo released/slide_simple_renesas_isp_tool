@@ -5,7 +5,7 @@
 
 # Simple Renesas ISP Tool 與 MCU bridge 操作
 
-Simple Renesas ISP Tool 是個人開發與分享的 MCU 韌體更新及通訊測試工具。
+Simple Renesas ISP Tool 提供 MCU 韌體更新與通訊測試功能。
 透過 MCU bridge 連接 device，依需求選擇下載、操作、更新或通訊驗證。
 Device Boot／App 開發見 [RL78 Bootloader](../slide_boot_loader_for_RL78/)／[RH850 Bootloader](../slide_boot_loader_for_RH850/)。
 

@@ -70,12 +70,14 @@ F13 由 error ISR 擷取；F24 由主迴圈輪詢並清除已觀察旗標，不�
 硬體旗標可能合併多次事件，計數表示軟體擷取次數；counter 飽和於 `0xFFFF`。
 `CLEAR_STATS` 會重設統計，因此零次紀錄不等於已量測到沒有實體錯誤。
 
-比對封包時開啟 Tool 的 `Detailed trace (slower)` 與 Log，另存 device UART 與 analyzer trace。
-F13 Transfer 的接收規則是單筆 standard data `0x710／0x7FF`，送入 RX FIFO0；Boot 的 `0x700` 與 raw-block IDs 不適用於 Transfer。
-專案的 `tools/verify_transfer_filter.ps1 -CheckImage` 會讀取 map／MOT 核對實際連結的規則表，CS+ 建置也會自動執行。
-`F13 Custom Transfer: UART0 ready; starting CAN` 出現在 CAN 初始化前；若連這行也沒有，仍需核對 startup／clock／UART，不能以 `TX_END` 推定 Device 主程式已正常執行。
-量測速度時將 device 的 `CAN_TRANSFER_UART_TRACE_ENABLE` 設為 `0U` 後重建，並關閉 Tool detailed trace；
-錯誤擷取與 GET_STATS 仍運作。
+封包比對與量測條件：
+
+- 封包比對：開啟 Tool 的 `Detailed trace (slower)` 與 Log，另存 device UART 與 analyzer trace。
+- F13 接收規則：單筆 standard data `0x710／0x7FF` 送入 RX FIFO0；Boot 的 `0x700` 與 raw-block IDs 不適用於 Transfer。
+- 連結檢查：`tools/verify_transfer_filter.ps1 -CheckImage` 讀取 map／MOT 核對實際連結的規則表，CS+ 建置也會自動執行。
+- 啟動訊息：`F13 Custom Transfer: UART0 ready; starting CAN` 出現在 CAN 初始化前；沒有此訊息時，核對 startup／clock／UART，不能以 `TX_END` 推定 Device 主程式已正常執行。
+- 速度量測：將 device 的 `CAN_TRANSFER_UART_TRACE_ENABLE` 設為 `0U` 後重建，並關閉 Tool detailed trace；錯誤擷取與 GET_STATS 仍運作。
+
 完整 byte／command／counter 定義見 [通訊測試協定](https://github.com/released/simple_renesas_isp_tool/blob/main/docs/F13_TRANSFER_PROTOCOL.md)。
 <!-- TRANSFER_DIAGNOSTICS_END -->
 
